@@ -5,7 +5,12 @@
              version="3.2">
     <persistence-unit name="KitchenCostPU" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <!--        <class>be.technifutur.kitchencostapi.pojos>User</class>-->
+        <class>be.technifutur.kitchencostapi.pojos.Role</class>
+        <class>be.technifutur.kitchencostapi.pojos.User</class>
+        <class>be.technifutur.kitchencostapi.pojos.Ingredient</class>
+        <class>be.technifutur.kitchencostapi.pojos.RecipeIngredient</class>
+        <class>be.technifutur.kitchencostapi.pojos.Recipe</class>
+        <class>be.technifutur.kitchencostapi.pojos.MenuItem</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/kitchen_cost_db"/>
