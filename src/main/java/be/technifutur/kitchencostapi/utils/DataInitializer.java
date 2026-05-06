@@ -138,11 +138,15 @@ public class DataInitializer {
             Ingredient tofu = new Ingredient("Tofu", Unit.GRAM, new BigDecimal("0.01"), IngredientOrigin.PLANT);
             tofu.addAllergen(Allergen.SOY);
 
+            Ingredient pesto = new Ingredient("Pesto", Unit.GRAM, new BigDecimal("0.025"), IngredientOrigin.PLANT);
+            pesto.addAllergen(Allergen.NUTS);
+            pesto.addAllergen(Allergen.MILK);
+
             ingredientDao.saveAll(List.of(
                     farine, lait, oeuf, sucre, beurre,
                     steak, salade, tomate, miel, painBurger,
                     fromage, poulet, pommeDeTerre, huile, chocolat,
-                    farineAmande, banane, laitAmande, tofu));
+                    farineAmande, banane, laitAmande, tofu, pesto));
 
             System.out.println("Ingredients initialized");
         }
@@ -171,6 +175,7 @@ public class DataInitializer {
             Ingredient banane = ingredientDao.findByName("Banane").orElseThrow();
             Ingredient laitAmande = ingredientDao.findByName("Lait").orElseThrow();
             Ingredient tofu = ingredientDao.findByName("Tofu").orElseThrow();
+            Ingredient pesto = ingredientDao.findByName("Pesto").orElseThrow();
 
             Recipe burger = new Recipe("Burger maison", "Assembler et cuire");
             burger.addIngredient(painBurger, new BigDecimal("1"));
@@ -213,9 +218,13 @@ public class DataInitializer {
             bananaCake.addIngredient(laitAmande, new BigDecimal("200"));
             bananaCake.addIngredient(sucre, new BigDecimal("80"));
 
+            Recipe pestoPasta = new Recipe("Pâtes au pesto", "Cuire les pâtes puis mélanger avec le pesto");
+            pestoPasta.addIngredient(farine, new BigDecimal("200"));
+            pestoPasta.addIngredient(pesto, new BigDecimal("50"));
+
             recipeDao.saveAll(List.of(
                     burger, frites, saladeVeg, veganBowl, brownie,
-                    pancakes, bananaCake));
+                    pancakes, bananaCake, pestoPasta));
 
             System.out.println("Recipes initialized");
         }
@@ -231,6 +240,7 @@ public class DataInitializer {
             Recipe veganBowl = recipeDao.findByName("Bowl vegan").orElseThrow();
             Recipe brownie = recipeDao.findByName("Brownie").orElseThrow();
             Recipe bananaCake = recipeDao.findByName("Banana cake vegan").orElseThrow();
+            Recipe pestoPasta = recipeDao.findByName("Pâtes au pesto").orElseThrow();
 
             List<MenuItem> items = List.of(
 
@@ -322,6 +332,15 @@ public class DataInitializer {
                             MenuItemStatus.HIDDEN,
                             MenuItemType.DESSERT,
                             pancakes
+                    ),
+
+                    new MenuItem(
+                            "Pâtes au pesto",
+                            "Pesto maison et parmesan",
+                            new BigDecimal("13.50"),
+                            MenuItemStatus.AVAILABLE,
+                            MenuItemType.MAIN,
+                            pestoPasta
                     )
             );
 
