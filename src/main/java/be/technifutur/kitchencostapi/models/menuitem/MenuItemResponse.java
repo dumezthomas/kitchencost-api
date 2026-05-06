@@ -6,7 +6,7 @@ import be.technifutur.kitchencostapi.enums.MenuItemType;
 import java.math.BigDecimal;
 import java.util.Set;
 
-public record MenuItemClientResponse(
+public record MenuItemResponse(
 
         String name,
         String description,

@@ -1,6 +1,6 @@
 package be.technifutur.kitchencostapi.resources;
 
-import be.technifutur.kitchencostapi.services.MenuItemService;
+import be.technifutur.kitchencostapi.services.RecipeService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -9,27 +9,27 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("/menu")
-public class MenuItemResource {
+@Path("/recipes")
+public class RecipeResource {
 
     @Inject
-    MenuItemService menuItemService;
+    RecipeService recipeService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getMenuItems() {
+    public Response getRecipes() {
 
         return Response
-                .ok(menuItemService.getAvailableMenuItems())
+                .ok(recipeService.getRecipes())
                 .build();
     }
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getMenuItemById(@PathParam("id") Long id) {
+    public Response getRecipeById(@PathParam("id") Long id) {
 
-        return menuItemService.getAvailableMenuItem(id)
+        return recipeService.getRecipe(id)
                 .map(Response::ok)
                 .orElse(Response.status(Response.Status.NOT_FOUND))
                 .build();

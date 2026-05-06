@@ -94,8 +94,14 @@ public class DataInitializer {
             Ingredient farine = new Ingredient("Farine", Unit.GRAM, new BigDecimal("0.002"), IngredientOrigin.PLANT);
             farine.addAllergen(Allergen.GLUTEN);
 
+            Ingredient pates = new Ingredient("Pâtes", Unit.GRAM, new BigDecimal("0.004"), IngredientOrigin.PLANT);
+            pates.addAllergen(Allergen.GLUTEN);
+
             Ingredient lait = new Ingredient("Lait", Unit.MILLILITER, new BigDecimal("0.001"), IngredientOrigin.DAIRY);
             lait.addAllergen(Allergen.MILK);
+
+            Ingredient laitAvoine = new Ingredient("Lait d'avoine", Unit.MILLILITER, new BigDecimal("0.003"), IngredientOrigin.PLANT);
+            laitAvoine.addAllergen(Allergen.GLUTEN);
 
             Ingredient oeuf = new Ingredient("Œuf", Unit.PIECE, new BigDecimal("0.30"), IngredientOrigin.EGG);
             oeuf.addAllergen(Allergen.EGGS);
@@ -111,42 +117,47 @@ public class DataInitializer {
 
             Ingredient tomate = new Ingredient("Tomate", Unit.GRAM, new BigDecimal("0.004"), IngredientOrigin.PLANT);
 
-            Ingredient miel = new Ingredient("Miel", Unit.GRAM, new BigDecimal("0.02"), IngredientOrigin.HONEY);
-
             Ingredient painBurger = new Ingredient("Pain burger", Unit.PIECE, new BigDecimal("0.80"), IngredientOrigin.PLANT);
             painBurger.addAllergen(Allergen.GLUTEN);
 
             Ingredient fromage = new Ingredient("Fromage", Unit.GRAM, new BigDecimal("0.015"), IngredientOrigin.DAIRY);
             fromage.addAllergen(Allergen.MILK);
 
-            Ingredient poulet = new Ingredient("Poulet", Unit.GRAM, new BigDecimal("0.018"), IngredientOrigin.MEAT);
-
             Ingredient pommeDeTerre = new Ingredient("Pomme de terre", Unit.GRAM, new BigDecimal("0.002"), IngredientOrigin.PLANT);
 
-            Ingredient huile = new Ingredient("Huile", Unit.MILLILITER, new BigDecimal("0.005"), IngredientOrigin.PLANT);
+            Ingredient huile = new Ingredient("Huile d'olive", Unit.MILLILITER, new BigDecimal("0.005"), IngredientOrigin.PLANT);
 
-            Ingredient chocolat = new Ingredient("Chocolat", Unit.GRAM, new BigDecimal("0.02"), IngredientOrigin.PLANT);
-
-            Ingredient farineAmande = new Ingredient("Farine d'amande", Unit.GRAM, new BigDecimal("0.03"), IngredientOrigin.PLANT);
-            farineAmande.addAllergen(Allergen.NUTS);
+            Ingredient chocolatNoir = new Ingredient("Chocolat noir", Unit.GRAM, new BigDecimal("0.02"), IngredientOrigin.PLANT);
 
             Ingredient banane = new Ingredient("Banane", Unit.GRAM, new BigDecimal("0.003"), IngredientOrigin.PLANT);
-
-            Ingredient laitAmande = new Ingredient("Lait d'amande", Unit.MILLILITER, new BigDecimal("0.004"), IngredientOrigin.PLANT);
-            laitAmande.addAllergen(Allergen.NUTS);
 
             Ingredient tofu = new Ingredient("Tofu", Unit.GRAM, new BigDecimal("0.01"), IngredientOrigin.PLANT);
             tofu.addAllergen(Allergen.SOY);
 
-            Ingredient pesto = new Ingredient("Pesto", Unit.GRAM, new BigDecimal("0.025"), IngredientOrigin.PLANT);
+            Ingredient pesto = new Ingredient("Pesto", Unit.GRAM, new BigDecimal("0.025"), IngredientOrigin.DAIRY);
             pesto.addAllergen(Allergen.NUTS);
             pesto.addAllergen(Allergen.MILK);
 
             ingredientDao.saveAll(List.of(
-                    farine, lait, oeuf, sucre, beurre,
-                    steak, salade, tomate, miel, painBurger,
-                    fromage, poulet, pommeDeTerre, huile, chocolat,
-                    farineAmande, banane, laitAmande, tofu, pesto));
+                    farine,
+                    pates,
+                    lait,
+                    laitAvoine,
+                    oeuf,
+                    sucre,
+                    beurre,
+                    steak,
+                    salade,
+                    tomate,
+                    painBurger,
+                    fromage,
+                    pommeDeTerre,
+                    huile,
+                    chocolatNoir,
+                    banane,
+                    tofu,
+                    pesto
+            ));
 
             System.out.println("Ingredients initialized");
         }
@@ -157,74 +168,89 @@ public class DataInitializer {
         if (recipeDao.count() == 0) {
 
             Ingredient farine = ingredientDao.findByName("Farine").orElseThrow();
+            Ingredient pates = ingredientDao.findByName("Pâtes").orElseThrow();
             Ingredient lait = ingredientDao.findByName("Lait").orElseThrow();
+            Ingredient laitAvoine = ingredientDao.findByName("Lait d'avoine").orElseThrow();
             Ingredient oeuf = ingredientDao.findByName("Œuf").orElseThrow();
             Ingredient sucre = ingredientDao.findByName("Sucre").orElseThrow();
             Ingredient beurre = ingredientDao.findByName("Beurre").orElseThrow();
             Ingredient steak = ingredientDao.findByName("Steak haché").orElseThrow();
             Ingredient salade = ingredientDao.findByName("Salade").orElseThrow();
             Ingredient tomate = ingredientDao.findByName("Tomate").orElseThrow();
-            Ingredient miel = ingredientDao.findByName("Miel").orElseThrow();
             Ingredient painBurger = ingredientDao.findByName("Pain burger").orElseThrow();
             Ingredient fromage = ingredientDao.findByName("Fromage").orElseThrow();
-            Ingredient poulet = ingredientDao.findByName("Poulet").orElseThrow();
             Ingredient pommeDeTerre = ingredientDao.findByName("Pomme de terre").orElseThrow();
-            Ingredient huile = ingredientDao.findByName("Huile").orElseThrow();
-            Ingredient chocolat = ingredientDao.findByName("Chocolat").orElseThrow();
-            Ingredient farineAmande = ingredientDao.findByName("Farine d'amande").orElseThrow();
+            Ingredient huile = ingredientDao.findByName("Huile d'olive").orElseThrow();
+            Ingredient chocolatNoir = ingredientDao.findByName("Chocolat noir").orElseThrow();
             Ingredient banane = ingredientDao.findByName("Banane").orElseThrow();
-            Ingredient laitAmande = ingredientDao.findByName("Lait").orElseThrow();
             Ingredient tofu = ingredientDao.findByName("Tofu").orElseThrow();
             Ingredient pesto = ingredientDao.findByName("Pesto").orElseThrow();
 
-            Recipe burger = new Recipe("Burger maison", "Assembler et cuire");
+            Recipe burger = new Recipe("Burger maison", "Assembler et cuire les ingrédients");
+
             burger.addIngredient(painBurger, new BigDecimal("1"));
             burger.addIngredient(steak, new BigDecimal("150"));
             burger.addIngredient(fromage, new BigDecimal("30"));
             burger.addIngredient(tomate, new BigDecimal("50"));
             burger.addIngredient(salade, new BigDecimal("30"));
 
-            Recipe frites = new Recipe("Frites maison", "Couper et frire");
+            Recipe frites = new Recipe("Frites maison", "Couper puis frire les pommes de terre");
+
             frites.addIngredient(pommeDeTerre, new BigDecimal("300"));
             frites.addIngredient(huile, new BigDecimal("50"));
 
-            Recipe saladeVeg = new Recipe("Salade composée", "Assembler les ingrédients");
-            saladeVeg.addIngredient(salade, new BigDecimal("100"));
-            saladeVeg.addIngredient(tomate, new BigDecimal("80"));
-            saladeVeg.addIngredient(fromage, new BigDecimal("40"));
+            Recipe saladeComposee = new Recipe("Salade composée", "Assembler les ingrédients");
+
+            saladeComposee.addIngredient(salade, new BigDecimal("100"));
+            saladeComposee.addIngredient(tomate, new BigDecimal("80"));
+            saladeComposee.addIngredient(fromage, new BigDecimal("40"));
 
             Recipe veganBowl = new Recipe("Bowl vegan", "Assembler et assaisonner");
+
             veganBowl.addIngredient(tofu, new BigDecimal("120"));
             veganBowl.addIngredient(tomate, new BigDecimal("60"));
             veganBowl.addIngredient(salade, new BigDecimal("80"));
             veganBowl.addIngredient(huile, new BigDecimal("20"));
 
-            Recipe brownie = new Recipe("Brownie", "Cuire au four");
+            Recipe brownie = new Recipe("Brownie chocolat", "Mélanger puis cuire au four");
+
             brownie.addIngredient(farine, new BigDecimal("150"));
-            brownie.addIngredient(chocolat, new BigDecimal("200"));
+            brownie.addIngredient(chocolatNoir, new BigDecimal("200"));
             brownie.addIngredient(beurre, new BigDecimal("100"));
             brownie.addIngredient(oeuf, new BigDecimal("2"));
+            brownie.addIngredient(sucre, new BigDecimal("80"));
 
-            Recipe pancakes = new Recipe("Pancakes", "Mélanger tous les ingrédients puis cuire à la poêle");
+            Recipe pancakes = new Recipe("Pancakes", "Mélanger puis cuire à la poêle");
+
             pancakes.addIngredient(farine, new BigDecimal("200"));
             pancakes.addIngredient(lait, new BigDecimal("300"));
             pancakes.addIngredient(oeuf, new BigDecimal("2"));
             pancakes.addIngredient(sucre, new BigDecimal("50"));
             pancakes.addIngredient(beurre, new BigDecimal("20"));
 
-            Recipe bananaCake = new Recipe("Banana cake vegan", "Mélanger et cuire");
+            Recipe bananaCake = new Recipe("Banana cake vegan", "Mélanger puis cuire au four");
+
             bananaCake.addIngredient(banane, new BigDecimal("200"));
             bananaCake.addIngredient(farine, new BigDecimal("150"));
-            bananaCake.addIngredient(laitAmande, new BigDecimal("200"));
+            bananaCake.addIngredient(laitAvoine, new BigDecimal("200"));
             bananaCake.addIngredient(sucre, new BigDecimal("80"));
+            bananaCake.addIngredient(huile, new BigDecimal("40"));
 
-            Recipe pestoPasta = new Recipe("Pâtes au pesto", "Cuire les pâtes puis mélanger avec le pesto");
-            pestoPasta.addIngredient(farine, new BigDecimal("200"));
+            Recipe pestoPasta = new Recipe("Pâtes au pesto", "Cuire les pâtes puis ajouter le pesto");
+
+            pestoPasta.addIngredient(pates, new BigDecimal("200"));
             pestoPasta.addIngredient(pesto, new BigDecimal("50"));
 
             recipeDao.saveAll(List.of(
-                    burger, frites, saladeVeg, veganBowl, brownie,
-                    pancakes, bananaCake, pestoPasta));
+                    burger,
+                    frites,
+                    saladeComposee,
+                    veganBowl,
+                    brownie,
+                    pancakes,
+                    bananaCake,
+                    pestoPasta
+            ));
 
             System.out.println("Recipes initialized");
         }
@@ -234,11 +260,12 @@ public class DataInitializer {
 
         if (menuItemDao.count() == 0) {
 
-            Recipe pancakes = recipeDao.findByName("Pancakes").orElseThrow();
             Recipe burger = recipeDao.findByName("Burger maison").orElseThrow();
-            Recipe salade = recipeDao.findByName("Salade composée").orElseThrow();
+            Recipe frites = recipeDao.findByName("Frites maison").orElseThrow();
+            Recipe saladeComposee = recipeDao.findByName("Salade composée").orElseThrow();
             Recipe veganBowl = recipeDao.findByName("Bowl vegan").orElseThrow();
-            Recipe brownie = recipeDao.findByName("Brownie").orElseThrow();
+            Recipe brownie = recipeDao.findByName("Brownie chocolat").orElseThrow();
+            Recipe pancakes = recipeDao.findByName("Pancakes").orElseThrow();
             Recipe bananaCake = recipeDao.findByName("Banana cake vegan").orElseThrow();
             Recipe pestoPasta = recipeDao.findByName("Pâtes au pesto").orElseThrow();
 
@@ -246,7 +273,7 @@ public class DataInitializer {
 
                     new MenuItem(
                             "Burger classique",
-                            "Recette signature",
+                            "Notre burger signature",
                             new BigDecimal("14.50"),
                             MenuItemStatus.AVAILABLE,
                             MenuItemType.MAIN,
@@ -254,8 +281,8 @@ public class DataInitializer {
                     ),
 
                     new MenuItem(
-                            "Burger premium",
-                            "Version gourmet",
+                            "Burger gourmet",
+                            "Version premium du burger maison",
                             new BigDecimal("18.90"),
                             MenuItemStatus.AVAILABLE,
                             MenuItemType.MAIN,
@@ -264,7 +291,7 @@ public class DataInitializer {
 
                     new MenuItem(
                             "Burger promo",
-                            "Offre spéciale",
+                            "Offre spéciale du midi",
                             new BigDecimal("11.00"),
                             MenuItemStatus.AVAILABLE,
                             MenuItemType.MAIN,
@@ -273,7 +300,7 @@ public class DataInitializer {
 
                     new MenuItem(
                             "Burger test",
-                            "Non affiché",
+                            "Version non affichée au public",
                             new BigDecimal("15.00"),
                             MenuItemStatus.HIDDEN,
                             MenuItemType.MAIN,
@@ -281,21 +308,48 @@ public class DataInitializer {
                     ),
 
                     new MenuItem(
+                            "Frites maison",
+                            "Pommes de terre fraîches",
+                            new BigDecimal("5.50"),
+                            MenuItemStatus.AVAILABLE,
+                            MenuItemType.STARTER,
+                            frites
+                    ),
+
+                    new MenuItem(
                             "Salade composée",
-                            "Option végétarienne",
+                            "Salade fraîche au fromage",
                             new BigDecimal("9.50"),
                             MenuItemStatus.AVAILABLE,
                             MenuItemType.STARTER,
-                            salade
+                            saladeComposee
                     ),
 
                     new MenuItem(
                             "Bowl vegan",
-                            "Plat équilibré",
+                            "Tofu et légumes frais",
                             new BigDecimal("11.50"),
                             MenuItemStatus.AVAILABLE,
                             MenuItemType.MAIN,
                             veganBowl
+                    ),
+
+                    new MenuItem(
+                            "Pâtes au pesto",
+                            "Pesto au parmesan et basilic",
+                            new BigDecimal("13.50"),
+                            MenuItemStatus.AVAILABLE,
+                            MenuItemType.MAIN,
+                            pestoPasta
+                    ),
+
+                    new MenuItem(
+                            "Brownie chocolat",
+                            "Dessert chocolaté maison",
+                            new BigDecimal("6.50"),
+                            MenuItemStatus.AVAILABLE,
+                            MenuItemType.DESSERT,
+                            brownie
                     ),
 
                     new MenuItem(
@@ -308,17 +362,8 @@ public class DataInitializer {
                     ),
 
                     new MenuItem(
-                            "Brownie chocolat",
-                            "Dessert gourmand",
-                            new BigDecimal("6.50"),
-                            MenuItemStatus.AVAILABLE,
-                            MenuItemType.DESSERT,
-                            brownie
-                    ),
-
-                    new MenuItem(
                             "Pancakes classiques",
-                            "Petit déjeuner",
+                            "Petit déjeuner gourmand",
                             new BigDecimal("8.50"),
                             MenuItemStatus.AVAILABLE,
                             MenuItemType.DESSERT,
@@ -327,20 +372,11 @@ public class DataInitializer {
 
                     new MenuItem(
                             "Pancakes premium",
-                            "Version luxe",
+                            "Version brunch premium",
                             new BigDecimal("12.00"),
                             MenuItemStatus.HIDDEN,
                             MenuItemType.DESSERT,
                             pancakes
-                    ),
-
-                    new MenuItem(
-                            "Pâtes au pesto",
-                            "Pesto maison et parmesan",
-                            new BigDecimal("13.50"),
-                            MenuItemStatus.AVAILABLE,
-                            MenuItemType.MAIN,
-                            pestoPasta
                     )
             );
 

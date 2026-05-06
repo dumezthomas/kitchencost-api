@@ -2,8 +2,7 @@ package be.technifutur.kitchencostapi.services;
 
 import be.technifutur.kitchencostapi.daos.MenuItemDao;
 import be.technifutur.kitchencostapi.enums.MenuItemStatus;
-import be.technifutur.kitchencostapi.models.menuitem.MenuItemClientResponse;
-import be.technifutur.kitchencostapi.models.menuitem.MenuItemCookResponse;
+import be.technifutur.kitchencostapi.models.menuitem.MenuItemResponse;
 import be.technifutur.kitchencostapi.pojos.MenuItem;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -20,37 +19,23 @@ public class MenuItemService {
     @Inject
     RecipeService recipeService;
 
-    public List<MenuItemClientResponse> getAvailableMenuItemsForClient() {
+    public List<MenuItemResponse> getAvailableMenuItems() {
 
         return menuItemDao.findByStatus(MenuItemStatus.AVAILABLE)
                 .stream()
-                .map(this::toClientResponse)
+                .map(this::toResponse)
                 .toList();
     }
 
-    public Optional<MenuItemClientResponse> getAvailableMenuItemForClient(Long id) {
+    public Optional<MenuItemResponse> getAvailableMenuItem(Long id) {
 
         return menuItemDao.findByIdAndStatus(id, MenuItemStatus.AVAILABLE)
-                .map(this::toClientResponse);
+                .map(this::toResponse);
     }
 
-    public List<MenuItemCookResponse> getMenuItemsForCook() {
+    private MenuItemResponse toResponse(MenuItem mi) {
 
-        return menuItemDao.findAll()
-                .stream()
-                .map(this::toCookResponse)
-                .toList();
-    }
-
-    public Optional<MenuItemCookResponse> getMenuItemForCook(Long id) {
-
-        return menuItemDao.findById(id)
-                .map(this::toCookResponse);
-    }
-
-    private MenuItemClientResponse toClientResponse(MenuItem mi) {
-
-        return new MenuItemClientResponse(
+        return new MenuItemResponse(
                 mi.getName(),
                 mi.getDescription(),
                 mi.getSellingPrice(),
@@ -61,17 +46,6 @@ public class MenuItemService {
 
                 recipeService.isVegan(mi.getRecipe()),
                 recipeService.isVegetarian(mi.getRecipe())
-        );
-    }
-
-    private MenuItemCookResponse toCookResponse(MenuItem mi) {
-
-        return new MenuItemCookResponse(
-                mi.getName(),
-                mi.getType(),
-
-                mi.getRecipe().getInstructions(),
-                recipeService.getRecipeIngredients(mi.getRecipe())
         );
     }
 }

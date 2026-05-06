@@ -10,7 +10,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
                 version = "1.0",
                 description = "API for managing menu, recipes and food cost"
         ),
-        servers = @Server(url = "/", description = "Current server")
+        servers = @Server(url = "/kitchencost", description = "KitchenCost Api")
 )
 public class OpenApiConfig {
 }
