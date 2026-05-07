@@ -43,12 +43,14 @@ public class RecipeIngredient {
     private BigDecimal quantity;
 
     public RecipeIngredient(Recipe recipe, Ingredient ingredient, BigDecimal quantity) {
+
         this.recipe = recipe;
         this.ingredient = ingredient;
         this.quantity = quantity;
     }
 
     public BigDecimal getCost() {
+
         if (ingredient == null || ingredient.getUnitPrice() == null || quantity == null) {
             return BigDecimal.ZERO;
         }

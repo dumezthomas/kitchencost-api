@@ -8,10 +8,10 @@ public record MenuItemFinancialResponse(
         BigDecimal sellingPrice,
 
         BigDecimal recipeCost,
-
         BigDecimal margin,
         BigDecimal foodCostPercentage,
 
         boolean profitable
 ) {
+
 }

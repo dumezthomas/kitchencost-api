@@ -62,6 +62,7 @@ public class MenuItem {
                     MenuItemStatus status,
                     MenuItemType type,
                     Recipe recipe) {
+
         this.name = name;
         this.description = description;
         this.sellingPrice = sellingPrice;

@@ -17,7 +17,7 @@ public class MenuItemResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getMenuItems() {
+    public Response getMenu() {
 
         return Response
                 .ok(menuItemService.getAvailableMenuItems())
@@ -27,7 +27,7 @@ public class MenuItemResource {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getMenuItemById(@PathParam("id") Long id) {
+    public Response getMenuItem(@PathParam("id") Long id) {
 
         return menuItemService.getAvailableMenuItem(id)
                 .map(Response::ok)

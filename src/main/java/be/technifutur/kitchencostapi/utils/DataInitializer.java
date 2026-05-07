@@ -241,6 +241,12 @@ public class DataInitializer {
             pestoPasta.addIngredient(pates, new BigDecimal("200"));
             pestoPasta.addIngredient(pesto, new BigDecimal("50"));
 
+            Recipe amuseBouche = new Recipe("Amuse-bouche tomate", "Assembler et servir frais");
+
+            amuseBouche.addIngredient(tomate, new BigDecimal("20"));
+            amuseBouche.addIngredient(fromage, new BigDecimal("10"));
+            amuseBouche.addIngredient(huile, new BigDecimal("5"));
+
             recipeDao.saveAll(List.of(
                     burger,
                     frites,
@@ -249,7 +255,8 @@ public class DataInitializer {
                     brownie,
                     pancakes,
                     bananaCake,
-                    pestoPasta
+                    pestoPasta,
+                    amuseBouche
             ));
 
             System.out.println("Recipes initialized");
@@ -268,6 +275,7 @@ public class DataInitializer {
             Recipe pancakes = recipeDao.findByName("Pancakes").orElseThrow();
             Recipe bananaCake = recipeDao.findByName("Banana cake vegan").orElseThrow();
             Recipe pestoPasta = recipeDao.findByName("Pâtes au pesto").orElseThrow();
+            Recipe amuseBouche = recipeDao.findByName("Amuse-bouche tomate").orElseThrow();
 
             List<MenuItem> items = List.of(
 
@@ -377,6 +385,15 @@ public class DataInitializer {
                             MenuItemStatus.HIDDEN,
                             MenuItemType.DESSERT,
                             pancakes
+                    ),
+
+                    new MenuItem(
+                            "Amuse-bouche offert",
+                            "Servi gratuitement avant le repas",
+                            BigDecimal.ZERO,
+                            MenuItemStatus.AVAILABLE,
+                            MenuItemType.AMUSE_BOUCHE,
+                            amuseBouche
                     )
             );
 

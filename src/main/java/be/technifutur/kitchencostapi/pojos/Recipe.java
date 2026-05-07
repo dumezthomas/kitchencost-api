@@ -39,16 +39,19 @@ public class Recipe {
     private Set<RecipeIngredient> ingredients = new HashSet<>();
 
     public Recipe(String name, String instructions) {
+
         this.name = name;
         this.instructions = instructions;
     }
 
     public void addIngredient(Ingredient ingredient, BigDecimal quantity) {
+
         RecipeIngredient recipeIngredient = new RecipeIngredient(this, ingredient, quantity);
         this.ingredients.add(recipeIngredient);
     }
 
     public void removeIngredient(Ingredient ingredient) {
+
         this.ingredients.removeIf(ri -> ri.getIngredient().equals(ingredient));
     }
 }

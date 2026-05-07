@@ -59,6 +59,7 @@ public class Ingredient {
     private Set<Allergen> allergens = new HashSet<>();
 
     public Ingredient(String name, Unit unit, BigDecimal unitPrice, IngredientOrigin origin) {
+
         this.name = name;
         this.unit = unit;
         this.unitPrice = unitPrice;
@@ -66,10 +67,12 @@ public class Ingredient {
     }
 
     public void addAllergen(Allergen allergen) {
+
         this.allergens.add(allergen);
     }
 
     public void removeAllergen(Allergen allergen) {
+
         this.allergens.remove(allergen);
     }
 }

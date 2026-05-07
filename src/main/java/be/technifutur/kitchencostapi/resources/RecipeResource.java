@@ -27,7 +27,7 @@ public class RecipeResource {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getRecipeById(@PathParam("id") Long id) {
+    public Response getRecipe(@PathParam("id") Long id) {
 
         return recipeService.getRecipe(id)
                 .map(Response::ok)
