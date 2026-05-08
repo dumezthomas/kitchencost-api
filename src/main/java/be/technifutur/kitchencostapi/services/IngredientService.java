@@ -10,7 +10,6 @@ import be.technifutur.kitchencostapi.pojos.Ingredient;
 import be.technifutur.kitchencostapi.pojos.MenuItem;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -31,7 +30,6 @@ public class IngredientService {
     @Inject
     FinancialReportService financialReportService;
 
-    @Transactional
     public Optional<IngredientPriceImpactResponse> updateIngredientPrice(Long id, IngredientPriceUpdateRequest request) {
 
         return ingredientDao.findById(id)

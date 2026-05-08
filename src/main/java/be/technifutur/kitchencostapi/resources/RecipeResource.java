@@ -1,5 +1,6 @@
 package be.technifutur.kitchencostapi.resources;
 
+import be.technifutur.kitchencostapi.annotations.IsAuthenticated;
 import be.technifutur.kitchencostapi.services.RecipeService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
@@ -17,6 +18,7 @@ public class RecipeResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @IsAuthenticated
     public Response getRecipes() {
 
         return Response
@@ -27,6 +29,7 @@ public class RecipeResource {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @IsAuthenticated
     public Response getRecipe(@PathParam("id") Long id) {
 
         return recipeService.getRecipe(id)

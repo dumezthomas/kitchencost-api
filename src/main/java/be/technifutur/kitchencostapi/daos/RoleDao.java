@@ -10,6 +10,7 @@ import java.util.Optional;
 public class RoleDao extends CrudDao<Role, Integer> {
 
     public Optional<Role> findByName(String name) {
+
         try (var em = emf.createEntityManager()) {
             List<Role> roles = em.createQuery(
                             "SELECT r FROM Role r WHERE r.name = :name",

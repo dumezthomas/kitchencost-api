@@ -1,5 +1,7 @@
 package be.technifutur.kitchencostapi.resources;
 
+import be.technifutur.kitchencostapi.annotations.HasAuthority;
+import be.technifutur.kitchencostapi.annotations.IsAuthenticated;
 import be.technifutur.kitchencostapi.enums.MenuItemStatus;
 import be.technifutur.kitchencostapi.services.FinancialReportService;
 import jakarta.inject.Inject;
@@ -16,6 +18,8 @@ public class FinancialReportResource {
     @GET
     @Path("/menu")
     @Produces(MediaType.APPLICATION_JSON)
+    @IsAuthenticated
+    @HasAuthority("CHEF")
     public Response getMenuFinancialReport(@QueryParam("status") MenuItemStatus status) {
 
         return Response
@@ -26,6 +30,8 @@ public class FinancialReportResource {
     @GET
     @Path("/menu/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @IsAuthenticated
+    @HasAuthority("CHEF")
     public Response getMenuItemFinancialReport(@PathParam("id") Long id) {
 
         return financialReportService.getMenuItemFinancialReport(id)
