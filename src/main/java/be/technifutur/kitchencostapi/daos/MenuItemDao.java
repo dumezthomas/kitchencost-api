@@ -11,7 +11,7 @@ import java.util.Optional;
 public class MenuItemDao extends CrudDao<MenuItem, Long> {
 
     private static final String FETCH_QUERY = """
-            SELECT DISTINCT mi FROM MenuItem mi
+            SELECT mi FROM MenuItem mi
             JOIN FETCH mi.recipe r
             JOIN FETCH r.ingredients ri
             JOIN FETCH ri.ingredient i
@@ -19,6 +19,7 @@ public class MenuItemDao extends CrudDao<MenuItem, Long> {
 
     @Override
     public List<MenuItem> findAll() {
+
         try (var em = emf.createEntityManager()) {
             return em.createQuery(
                             FETCH_QUERY +
@@ -29,6 +30,7 @@ public class MenuItemDao extends CrudDao<MenuItem, Long> {
     }
 
     public List<MenuItem> findByStatus(MenuItemStatus status) {
+
         try (var em = emf.createEntityManager()) {
             return em.createQuery(
                             FETCH_QUERY +
@@ -40,7 +42,21 @@ public class MenuItemDao extends CrudDao<MenuItem, Long> {
         }
     }
 
+    public List<MenuItem> findByIngredientId(Long ingredientId) {
+
+        try (var em = emf.createEntityManager()) {
+            return em.createQuery(
+                            FETCH_QUERY +
+                                    " WHERE i.id = :id" +
+                                    " ORDER BY mi.type",
+                            MenuItem.class)
+                    .setParameter("id", ingredientId)
+                    .getResultList();
+        }
+    }
+
     public Optional<MenuItem> findById(Long id) {
+
         try (var em = emf.createEntityManager()) {
             return em.createQuery(
                             FETCH_QUERY +
@@ -52,6 +68,7 @@ public class MenuItemDao extends CrudDao<MenuItem, Long> {
     }
 
     public Optional<MenuItem> findByIdAndStatus(Long id, MenuItemStatus status) {
+
         try (var em = emf.createEntityManager()) {
             return em.createQuery(
                             FETCH_QUERY +

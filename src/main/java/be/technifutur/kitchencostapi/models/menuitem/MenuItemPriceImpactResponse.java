@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 public record MenuItemPriceImpactResponse(
 
         String menuItemName,
+        BigDecimal sellingPrice,
 
         BigDecimal oldRecipeCost,
         BigDecimal newRecipeCost,

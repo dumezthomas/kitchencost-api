@@ -13,7 +13,12 @@ import jakarta.inject.Inject;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import static be.technifutur.kitchencostapi.utils.Helpers.round;
 
 @ApplicationScoped
 public class FinancialReportService {
@@ -40,22 +45,13 @@ public class FinancialReportService {
                 .map(this::toResponse);
     }
 
-    private MenuFinancialResponse toResponse(List<MenuItemFinancialResponse> items) {
+    public Map<MenuItem, MenuItemFinancialResponse> getMenuItemsFinancialReport(List<MenuItem> menuItems) {
 
-        long nbProfitableItems = nbProfitableItems(items);
-
-        return new MenuFinancialResponse(
-                round(calculateAverageMargin(items)),
-                round(calculateGlobalFoodCostPercentage(items)),
-
-                nbProfitableItems,
-                items.size() - nbProfitableItems,
-
-                items
-        );
+        return menuItems.stream()
+                .collect(Collectors.toMap(Function.identity(), this::toResponse));
     }
 
-    private MenuItemFinancialResponse toResponse(MenuItem mi) {
+    public MenuItemFinancialResponse toResponse(MenuItem mi) {
 
         BigDecimal recipeCost = calculateRecipeCost(mi.getRecipe());
         BigDecimal foodCostPercentage = calculateFoodCostPercentage(mi.getSellingPrice(), recipeCost);
@@ -69,6 +65,32 @@ public class FinancialReportService {
                 round(foodCostPercentage),
 
                 isProfitable(foodCostPercentage)
+        );
+    }
+
+    public BigDecimal calculatePriceChangePercentage(BigDecimal oldPrice, BigDecimal newPrice) {
+
+        if (oldPrice.compareTo(BigDecimal.ZERO) == 0) {
+            return null;
+        }
+
+        return newPrice.subtract(oldPrice)
+                .divide(oldPrice, 4, RoundingMode.HALF_UP)
+                .multiply(BigDecimal.valueOf(100));
+    }
+
+    private MenuFinancialResponse toResponse(List<MenuItemFinancialResponse> items) {
+
+        long nbProfitableItems = nbProfitableItems(items);
+
+        return new MenuFinancialResponse(
+                round(calculateAverageMargin(items)),
+                round(calculateGlobalFoodCostPercentage(items)),
+
+                nbProfitableItems,
+                items.size() - nbProfitableItems,
+
+                items
         );
     }
 
@@ -137,14 +159,5 @@ public class FinancialReportService {
                 .stream()
                 .filter(MenuItemFinancialResponse::profitable)
                 .count();
-    }
-
-    private BigDecimal round(BigDecimal value) {
-
-        if (value == null) {
-            return null;
-        }
-
-        return value.setScale(2, RoundingMode.HALF_UP);
     }
 }

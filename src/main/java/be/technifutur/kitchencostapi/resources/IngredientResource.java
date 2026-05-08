@@ -3,7 +3,6 @@ package be.technifutur.kitchencostapi.resources;
 import be.technifutur.kitchencostapi.models.ingredient.IngredientPriceUpdateRequest;
 import be.technifutur.kitchencostapi.services.IngredientService;
 import jakarta.inject.Inject;
-import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -11,7 +10,8 @@ import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+
+import static be.technifutur.kitchencostapi.utils.Helpers.validate;
 
 @Path("/ingredients")
 public class IngredientResource {
@@ -28,14 +28,10 @@ public class IngredientResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateIngredientPrice(@PathParam("id") Long id, IngredientPriceUpdateRequest request) {
 
-        Set<ConstraintViolation<IngredientPriceUpdateRequest>> violations = validator.validate(request);
-        if (!violations.isEmpty()) {
-            List<String> errors = violations.stream()
-                    .map(v -> v.getPropertyPath() + " " + v.getMessage())
-                    .toList();
-
+        Map<String, List<String>> errors = validate(validator, request);
+        if (!errors.isEmpty()) {
             return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(Map.of("errors", errors))
+                    .entity(errors)
                     .build();
         }
 
