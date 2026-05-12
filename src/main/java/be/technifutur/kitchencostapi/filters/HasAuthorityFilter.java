@@ -27,6 +27,12 @@ public class HasAuthorityFilter implements ContainerRequestFilter {
 
         SecurityContext securityContext = requestContext.getSecurityContext();
 
+        if (securityContext.getUserPrincipal() == null) {
+            requestContext.abortWith(
+                    Response.status(Response.Status.UNAUTHORIZED).build());
+            return;
+        }
+
         Method method = resourceInfo.getResourceMethod();
         HasAuthority hasAuthority = method.getAnnotation(HasAuthority.class);
 

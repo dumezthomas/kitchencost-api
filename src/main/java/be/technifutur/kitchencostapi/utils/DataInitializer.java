@@ -65,19 +65,15 @@ public class DataInitializer {
 
             List<User> users = List.of(
                     new User(
-                            "etchebest@kc.com",
-                            "etchebest",
-                            bcrypt.hashToString(12, "chef123".toCharArray()),
+                            "chef@kc.com",
+                            "chef",
+                            bcrypt.hashToString(12, "chef".toCharArray()),
                             chef),
+
                     new User(
-                            "remy@kc.com",
-                            "remy",
-                            bcrypt.hashToString(12, "rat123".toCharArray()),
-                            cook),
-                    new User(
-                            "lignac@kc.com",
-                            "lignac",
-                            bcrypt.hashToString(12, "cook123".toCharArray()),
+                            "cook@kc.com",
+                            "cook",
+                            bcrypt.hashToString(12, "cook".toCharArray()),
                             cook)
             );
 

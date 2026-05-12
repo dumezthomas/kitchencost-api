@@ -31,7 +31,7 @@ public class JwtProvider {
                 .id(user.getId().toString())
                 .subject(user.getUsername())
                 .claim("email", user.getEmail())
-                .claim("role", user.getRole())
+                .claim("role", user.getRole().getName())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expiration))
                 .compact();

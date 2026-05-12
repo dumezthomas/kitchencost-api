@@ -1,7 +1,6 @@
 package be.technifutur.kitchencostapi.resources;
 
 import be.technifutur.kitchencostapi.annotations.HasAuthority;
-import be.technifutur.kitchencostapi.annotations.IsAuthenticated;
 import be.technifutur.kitchencostapi.models.ingredient.IngredientPriceUpdateRequest;
 import be.technifutur.kitchencostapi.services.IngredientService;
 import jakarta.inject.Inject;
@@ -28,7 +27,6 @@ public class IngredientResource {
     @Path("/{id}/price")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @IsAuthenticated
     @HasAuthority("CHEF")
     public Response updateIngredientPrice(@PathParam("id") Long id, IngredientPriceUpdateRequest request) {
 
