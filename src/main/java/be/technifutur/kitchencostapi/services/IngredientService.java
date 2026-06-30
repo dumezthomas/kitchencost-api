@@ -35,16 +35,22 @@ public class IngredientService {
         return ingredientDao.findById(id)
                 .map(i -> {
 
+                    // Sauvegarde de l'ancien prix de l'ingrédient
                     BigDecimal oldUnitPrice = i.getUnitPrice();
+
+                    // Génération du rapport financier AVANT la modification
                     Map<MenuItem, MenuItemFinancialResponse> oldFinancials = financialReportService
                             .getMenuItemsFinancialReport(menuItemDao.findByIngredientId(i.getId()));
 
+                    // Mise à jour du prix de l'ingrédient
                     i.setUnitPrice(request.unitPrice());
                     ingredientDao.update(i);
 
+                    // Génération du rapport financier APRÈS la modification
                     Map<MenuItem, MenuItemFinancialResponse> newFinancials = financialReportService
                             .getMenuItemsFinancialReport(menuItemDao.findByIngredientId(i.getId()));
 
+                    // Construction de la réponse comparative avant / après
                     return toResponse(i, oldUnitPrice, oldFinancials, newFinancials);
                 });
     }
