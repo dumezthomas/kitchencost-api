@@ -1,7 +1,9 @@
 # KitchenCost API
 
-A backend REST API designed to help restaurants manage recipes, monitor food costs, and analyze the financial impact of
-ingredient price changes.
+> A backend REST API for restaurant cost management and profitability analysis.
+
+KitchenCost API is a backend REST API designed to help restaurants manage recipes, monitor food costs, and analyze the
+financial impact of ingredient price changes.
 
 The project was developed in Java using Jakarta EE and follows a layered architecture (Resources → Services → DAOs).
 
@@ -71,14 +73,14 @@ Example response:
 
 ## Technologies
 
-- Java
+- Java 25
 - Jakarta EE
 - JAX-RS
 - CDI
 - Hibernate / JPA
-- Tomcat
-- MySQL
-- JWT
+- PostgreSQL
+- Apache Tomcat 10
+- JWT (JJWT)
 - BCrypt
 - OpenAPI / Swagger
 
@@ -86,7 +88,7 @@ Example response:
 
 ## Architecture
 
-The project follows a classic layered architecture.
+The project follows a classic layered architecture to clearly separate HTTP endpoints, business logic and data access.
 
 ```
 Resources
@@ -107,7 +109,7 @@ Expose REST endpoints and validate incoming requests.
 
 ### Services
 
-Contain the business logic.
+Contain the business logic and orchestrate application workflows.
 
 ### DAOs
 
@@ -119,7 +121,7 @@ Handle database access using JPA.
 
 Unlike Spring applications, this project intentionally uses manual `EntityManager` management.
 
-Each DAO creates and closes its own persistence context:
+Each DAO creates and closes its own persistence context.
 
 ```java
 try(var em = emf.createEntityManager()){
@@ -127,29 +129,29 @@ try(var em = emf.createEntityManager()){
         }
 ```
 
-Transactions are handled manually inside DAO update methods.
+Transactions are managed manually inside DAO update methods.
 
-This approach was chosen to match the architectural constraints of the course and demonstrates explicit control over the
-persistence lifecycle.
+This approach was chosen to match the architectural constraints of the course while demonstrating explicit control over
+the persistence lifecycle.
 
 ---
 
 ## Security
 
-Authentication is based on JWT.
+Authentication is based on stateless JWT tokens.
 
-Two roles are available:
+Two application roles are available:
 
 - CHEF
 - COOK
 
-Protected endpoints use role-based authorization.
+Role-based authorization protects sensitive endpoints.
 
-Example:
+Examples:
 
-- CHEF can update ingredient prices.
-- COOK can consult recipes.
-- Public users can browse the menu.
+- **CHEF** can update ingredient prices and access financial reports.
+- **COOK** can consult recipes.
+- **Public users** can browse the menu.
 
 ---
 
@@ -215,16 +217,18 @@ src
 
 - Java 25
 - Maven
-- MySQL
+- PostgreSQL
 - Apache Tomcat 10
 
 ### Installation
+
+Clone the repository:
 
 ```bash
 git clone https://github.com/yourusername/KitchenCost-API.git
 ```
 
-Configure the database connection in the persistence configuration.
+Configure your PostgreSQL database and update the persistence configuration with your connection settings.
 
 Build the project:
 
@@ -232,7 +236,7 @@ Build the project:
 mvn clean package
 ```
 
-Deploy the generated WAR to Tomcat.
+Deploy the generated WAR file to Apache Tomcat.
 
 ---
 
@@ -243,9 +247,9 @@ Possible future improvements include:
 - **Optimize the ingredient price impact endpoint** by returning only the IDs of affected menu items instead of complete
   financial reports. This would significantly reduce the response payload, especially when many menu items are impacted.
 
-- **Retrieve detailed financial reports on demand.** After receiving the list of affected menu item IDs, the client
-  could request the updated financial report for a specific menu item through a dedicated endpoint. This approach would
-  improve scalability while keeping the API flexible.
+- **Retrieve detailed financial reports through dedicated endpoints** once the client has received the list of affected
+  menu item IDs. This approach would reduce network traffic while allowing additional information to be requested only
+  when needed.
 
 ---
 
