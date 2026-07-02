@@ -225,7 +225,7 @@ src
 Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/KitchenCost-API.git
+git clone https://github.com/yourusername/kitchencost-api.git
 ```
 
 Configure your PostgreSQL database and update the persistence configuration with your connection settings.
