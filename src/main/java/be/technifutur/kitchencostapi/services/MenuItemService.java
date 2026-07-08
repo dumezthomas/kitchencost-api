@@ -36,6 +36,8 @@ public class MenuItemService {
     private MenuItemResponse toResponse(MenuItem mi) {
 
         return new MenuItemResponse(
+                mi.getId(),
+
                 mi.getName(),
                 mi.getDescription(),
                 mi.getSellingPrice(),

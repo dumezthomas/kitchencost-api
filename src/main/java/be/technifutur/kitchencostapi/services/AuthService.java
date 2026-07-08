@@ -32,16 +32,28 @@ public class AuthService {
         return toResponse(user);
     }
 
+    public UserResponse me(String username) {
+
+        User user = userDao.findByEmailOrUsername(username)
+                .orElseThrow(InvalidCredentialsException::new);
+
+        return toUserResponse(user);
+    }
+
+    private UserResponse toUserResponse(User user) {
+
+        return new UserResponse(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getRole().getName()
+        );
+    }
+
     private AuthResponse toResponse(User user) {
 
         return new AuthResponse(
-                new UserResponse(
-                        user.getId(),
-                        user.getUsername(),
-                        user.getEmail(),
-                        user.getRole().getName()
-                ),
-
+                toUserResponse(user),
                 jwtProvider.generateToken(user)
         );
     }

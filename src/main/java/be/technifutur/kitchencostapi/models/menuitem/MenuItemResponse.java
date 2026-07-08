@@ -8,6 +8,8 @@ import java.util.Set;
 
 public record MenuItemResponse(
 
+        Long id,
+
         String name,
         String description,
         BigDecimal price,
@@ -19,4 +21,5 @@ public record MenuItemResponse(
         boolean vegan,
         boolean vegetarian
 ) {
+
 }
